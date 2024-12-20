@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services</title>
+</head>
+<body>
+    <h1>This is Services Page</h1>
+    <hr/>
+    <!-- using fragment -->
+    <div th:replace="~{base :: parent(~{::.third_content})}">
+        <section id="main_content">
+            <h2>This is Services Dynamic Page..</h2>
+            <p>This is dynamic content</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla vero recusandae et ducimus laboriosam
+                explicabo, nisi repellat quis ipsum repellendus?</p>
+            <button>Click on Dynamic Content</button>
+        </section>
+        <section id="second_content">
+            <h2>This is Services second content Dynamic Page..</h2>
+            <!-- <p>This is dynamic content</p> -->
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla vero recusandae et ducimus laboriosam
+                explicabo, nisi repellat quis ipsum repellendus?</p>
+            <!-- <button>Click on Dynamic Content</button> -->
+        </section>
+        <section class="third_content">
+            <h2>This is Services third content Dynamic Page..</h2>
+            <!-- <p>This is dynamic content</p> -->
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla vero recusandae et ducimus laboriosam
+                explicabo, nisi repellat quis ipsum repellendus?</p>
+            <!-- <button>Click on Dynamic Content</button> -->
+        </section>
+    </div>
+</body>
+</html>
