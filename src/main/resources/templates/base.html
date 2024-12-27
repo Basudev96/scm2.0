@@ -1,25 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" th:fragment="parent(content, title, script)" xmlns:th="http://www.thymeleaf.org">
+<html class="light" lang="en" th:fragment="parent(content, title, script)" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-th-replace="${title}">SCM</title>
     <link rel="stylesheet" data-th-href="@{'/css/output.css'}">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body>
+
+<body class="dark:bg-gray-900 dark:text-white">
     <!-- Common Header -->
     <div data-th-replace="navbar :: navbar"></div>
-    
-    <!-- Main Content -->
-     <div class="p-4">
-        <section data-th-replace="${content}"></section>
-     </div>
 
-     <!-- Common Footer -->
-     <footer class="p-4">Copyright: @SCM By ::Basudev Sharma</footer>
+    <!-- Main Content -->
+    <div class="p-4">
+        <section data-th-replace="${content}"></section>
+    </div>
+
+    <!-- Common Footer -->
+    <!-- <footer class="p-4">Copyright: @SCM By ::Basudev Sharma</footer> -->
+    <div data-th-replace="footer :: footer"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <script data-th-src="@{'/js/script.js'}"></script>
     <th:block data-th-replace="${script}"></th:block>
 </body>
+
 </html>
