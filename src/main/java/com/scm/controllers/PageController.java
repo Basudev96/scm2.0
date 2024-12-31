@@ -57,6 +57,10 @@ public class PageController {
         return new String("register");
     }
     
-    
+    //Processing register
+
+    public String processRegister() {
+        return "";
+    }
     
 }
