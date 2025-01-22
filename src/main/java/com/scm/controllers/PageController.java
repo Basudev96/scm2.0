@@ -87,7 +87,7 @@ public class PageController {
         if(rBindingResult.hasErrors()){
             System.out.println("Error: "+rBindingResult.toString());
             return "register";
-        }        
+        }
         //save data to database
         // User user = User.builder()
         // .name(userForm.getName())
