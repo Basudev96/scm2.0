@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
+
 <head>
     <title>Login</title>
 </head>
+
 <body>
     <div id="content">
         <div class="grid grid-cols-12 mt-4">
@@ -15,18 +17,19 @@
                     <div data-th-replace="message :: messagebox"></div>
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Login Here</h5>
                     <p class="font-normal text-gray-400 dark:text-gray-400">Start contact managing on cloud...</p>
-                    <form  
-                    method="post"
-                    data-th-action="@{'/authenticate'}"
-                    class="mt-5"
-                        >
-                        
+
+                    <div class="text-red-600 text-center my-3" th:if="${param.error}">
+                        Invalid username and password.</div>
+                    <div class="text-green-600 text-center my-3" th:if="${param.logout}">
+                        You have been logged out.</div>
+
+                    <form method="post" data-th-action="@{'/authenticate'}" class="mt-5">
+
                         <!-- Username Field -->
                         <div class="mb-3">
                             <label for="email"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-                            <input name="email" 
-                                type="email" id="email"
+                            <input name="email" type="email" id="email"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="name@gmail.com" required />
                             <!-- <p data-th-if="${#fields.hasErrors('email')}" data-th-errors="*{email}"
@@ -36,14 +39,13 @@
                         <div class="mb-3">
                             <label for="password"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                            <input name="password"
-                                type="password" id="password" 
+                            <input name="password" type="password" id="password"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required />
                             <!-- <p data-th-if="${#fields.hasErrors('password')}" data-th-errors="*{password}"
                                 class="text-red-600 px-1 py-2"></p> -->
                         </div>
-                        
+
                         <!-- buttons -->
                         <div class="mb-3 flex justify-center space-x-3">
                             <button type="submit"
@@ -61,4 +63,5 @@
         console.log("Hello from Login Page");
     </script>
 </body>
+
 </html>
