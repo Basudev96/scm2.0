@@ -53,6 +53,9 @@ public class SecurityConfig {
     @Autowired
     private SecurityCustomeUserDetailService userDetailsService;
 
+    @Autowired
+    private OAuthAuthenticationSuccessHandler handler;
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
@@ -111,7 +114,10 @@ public class SecurityConfig {
         });
 
         //oauth configuration
-        httpSecurity.oauth2Login(Customizer.withDefaults());
+        httpSecurity.oauth2Login(oauth->{
+            oauth.loginPage("/login");
+            oauth.successHandler(handler);
+        });
 
         return httpSecurity.build();
     }
