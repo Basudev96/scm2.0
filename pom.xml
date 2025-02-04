@@ -11,7 +11,8 @@
 	</parent>
 	<groupId>com.scm</groupId>
 	<artifactId>scm2.0</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.2</version>
+	<packaging>war</packaging>
 	<name>scm2.0</name>
 	<description>Project for storing and managing contacts on cloud</description>
 	<url />
@@ -53,6 +54,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 
 		<!--
 		https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->

@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  spring-boot-app:
+    build:
+      context: .   # The directory containing the Dockerfile
+    image: scm_2.0  # Name for the Docker image
+    container_name: spring-boot-app
+    ports:
+      - "8000:8000"  # Map port 8080 of the container to port 8080 on the host
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod  # Set environment variables if needed
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
