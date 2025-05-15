@@ -1,18 +1,30 @@
 version: '3.8'
 
 services:
-  spring-boot-app:
-    build:
-      context: .   # The directory containing the Dockerfile
-    image: scm_2.0  # Name for the Docker image
-    container_name: spring-boot-app
-    ports:
-      - "8000:8000"  # Map port 8080 of the container to port 8080 on the host
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-container
+    restart: always
     environment:
-      - SPRING_PROFILES_ACTIVE=prod  # Set environment variables if needed
-    networks:
-      - app-network
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+    ports:
+      - "3306:3306"
 
-networks:
-  app-network:
-    driver: bridge
+  myapp:
+    image: openjdk:17-jdk-slim
+    container_name: myapp-container
+    depends_on:
+      - mysql
+    volumes:
+      - ./app.jar:/app/app.jar
+    working_dir: /app
+    command: sh -c "sleep 20 && java -jar app.jar"
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mydb
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: pass

@@ -12,7 +12,7 @@
 	<groupId>com.scm</groupId>
 	<artifactId>scm2.0</artifactId>
 	<version>0.2</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>scm2.0</name>
 	<description>Project for storing and managing contacts on cloud</description>
 	<url />
