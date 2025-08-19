@@ -11,10 +11,16 @@ import com.scm.entities.Contact;
 import com.scm.entities.User;
 import com.scm.forms.ContactForm;
 import com.scm.helper.Helper;
+import com.scm.helper.Message;
+import com.scm.helper.MessageType;
 import com.scm.services.ContactService;
 import com.scm.services.UserServices;
 
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 @Controller
 @RequestMapping("/user/contacts")
@@ -36,7 +42,20 @@ public class ContactController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String saveContact(@ModelAttribute ContactForm contactForm,Authentication authentication) {
+    public String saveContact(@Valid @ModelAttribute ContactForm contactForm, BindingResult result,Authentication authentication, HttpSession session) {
+
+        //process the form data
+
+
+        //1 validation form
+
+        if (result.hasErrors()) {
+            session.setAttribute("message", Message.builder()
+            .content("Please correct the errors in the form")
+            .type(MessageType.red)
+            .build());
+            return "user/add_contact";
+        }
 
         String username = Helper.getEmailOfLoggedInUser(authentication);
 
@@ -59,6 +78,12 @@ public class ContactController {
 
         //process the form data
         System.out.println(contactForm);
+
+        session.setAttribute("message", 
+        Message.builder()
+            .content("Contact added successfully!")
+            .type(MessageType.green)
+            .build());
 
         return "redirect:/user/contacts/add";
 
