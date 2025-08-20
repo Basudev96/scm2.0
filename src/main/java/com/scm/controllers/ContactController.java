@@ -1,5 +1,9 @@
 package com.scm.controllers;
 
+import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -14,6 +18,7 @@ import com.scm.helper.Helper;
 import com.scm.helper.Message;
 import com.scm.helper.MessageType;
 import com.scm.services.ContactService;
+import com.scm.services.ImageService;
 import com.scm.services.UserServices;
 
 import jakarta.servlet.http.HttpSession;
@@ -26,11 +31,16 @@ import org.springframework.validation.BindingResult;
 @RequestMapping("/user/contacts")
 public class ContactController {
 
+    private Logger logger = LoggerFactory.getLogger(ContactController.class);
+
     @Autowired
     private ContactService contactService;
 
     @Autowired
     private UserServices userServices;
+
+    @Autowired
+    private ImageService imageService;
 
     @RequestMapping("/add")
     //add contact page: handler
@@ -60,7 +70,11 @@ public class ContactController {
         String username = Helper.getEmailOfLoggedInUser(authentication);
 
         User user = userServices.getUserByEmail(username);
+        logger.info("file Information: {}", contactForm.getContactImage().getOriginalFilename());
 
+        String filename = UUID.randomUUID().toString();
+
+        String fileURL=imageService.uploadImage(contactForm.getContactImage(), filename);
         //form - convert to entity
         Contact contact = new Contact();
         contact.setName(contactForm.getName());
@@ -71,6 +85,8 @@ public class ContactController {
         contact.setFavorite(contactForm.isFavorite());
         contact.setWebsiteLink(contactForm.getWebsiteLink());
         contact.setLinkedInLink(contactForm.getLinkedInLink());
+        contact.setPicture(fileURL);
+        contact.setCloudinaryImagePublicId(filename);
         contact.setUser(user);
 
 
