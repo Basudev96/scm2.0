@@ -22,7 +22,8 @@
                         <p class="text-gray-500">This contact will be stored on cloud, you can direct email this client
                             from SCM..</p>
 
-                        <form action="" class="mt-8" data-th-action="@{/user/contacts/add}" data-th-object="${contactForm}" method="post" enctype="multipart/form-data" >
+                        <form action="" class="mt-8" data-th-action="@{/user/contacts/add}"
+                            data-th-object="${contactForm}" method="post" enctype="multipart/form-data">
                             <!--name form-->
                             <div class="mb-3">
                                 <label for="input-group-1"
@@ -33,11 +34,12 @@
                                         class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                         <i class="fa-regular w-4 h-4 fa-user"></i>
                                     </div>
-                                    <input data-th-field="*{name}" type="text" 
+                                    <input data-th-field="*{name}" type="text"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="name">
                                 </div>
-                                <p class="text-red-500" data-th-if="${#fields.hasErrors('name')}" data-th-errors="*{name}">Invalid Name</p>
+                                <p class="text-red-500" data-th-if="${#fields.hasErrors('name')}"
+                                    data-th-errors="*{name}">Invalid Name</p>
                             </div>
 
                             <!--Email form-->
@@ -54,7 +56,8 @@
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="example@gmail.com">
                                 </div>
-                                <p class="text-red-500" data-th-if="${#fields.hasErrors('email')}" data-th-errors="*{email}">Invalid email address</p>
+                                <p class="text-red-500" data-th-if="${#fields.hasErrors('email')}"
+                                    data-th-errors="*{email}">Invalid email address</p>
                             </div>
 
                             <!--Phone form-->
@@ -67,11 +70,12 @@
                                         class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                         <i class="fa-solid w-4 h-4 fa-phone"></i>
                                     </div>
-                                    <input data-th-field="*{phoneNumber}" type="text" 
+                                    <input data-th-field="*{phoneNumber}" type="text"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="+911234567890">
                                 </div>
-                                <p class="text-red-500" data-th-if="${#fields.hasErrors('phoneNumber')}" data-th-errors="*{phoneNumber}">Phone number is required</p>
+                                <p class="text-red-500" data-th-if="${#fields.hasErrors('phoneNumber')}"
+                                    data-th-errors="*{phoneNumber}">Phone number is required</p>
                             </div>
 
                             <!--Address form-->
@@ -82,7 +86,8 @@
                                 <textarea data-th-field="*{address}" rows="4"
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Address of the contact.."></textarea>
-                                    <p class="text-red-500" data-th-if="${#fields.hasErrors('address')}" data-th-errors="*{address}">Address is required</p>
+                                <p class="text-red-500" data-th-if="${#fields.hasErrors('address')}"
+                                    data-th-errors="*{address}">Address is required</p>
                             </div>
 
                             <!--Description form-->
@@ -119,7 +124,7 @@
                                                 class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                                 <i class="fa-brands w-4 h-4 fa-linkedin"></i>
                                             </div>
-                                            <input data-th-field="*{linkedInLink}" type="text" 
+                                            <input data-th-field="*{linkedInLink}" type="text"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="https://www.linkedin.com/username/">
                                         </div>
@@ -131,11 +136,12 @@
                             <div class="mb-3">
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     for="large_size">Contact Image</label>
-                                <input 
-                                    
+                                <input
+                                    id="image_file_input"
                                     class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                    data-th-field="*{contactImage}" 
-                                    type="file">
+                                    data-th-field="*{contactImage}" type="file">
+
+                                    <img class="max-h-40 mx-auto rounded-lg shadow m-3" src="" id="upload_image_preview" alt="">
                             </div>
 
                             <!-- Favorite contact -->
@@ -148,8 +154,11 @@
                             </div>
 
                             <div class="button-container text-center">
-                                <button type="submit" class="px-3 py-2 dark:bg-blue-600 hover:dark:bg-blue-700 rounded bg-black text-white">Add Contact</button>
-                                <button type="reset" class="px-3 py-2 dark:bg-blue-600 hover:dark:bg-blue-700 rounded bg-black text-white">Reset</button>
+                                <button type="submit"
+                                    class="px-3 py-2 dark:bg-blue-600 hover:dark:bg-blue-700 rounded bg-black text-white">Add
+                                    Contact</button>
+                                <button type="reset"
+                                    class="px-3 py-2 dark:bg-blue-600 hover:dark:bg-blue-700 rounded bg-black text-white">Reset</button>
                             </div>
                         </form>
                     </div>
@@ -158,6 +167,7 @@
         </div>
     </div>
 
+    <script data-th-src="@{'/js/admin.js'}"></script>
 
     <script>
         console.log("This is contact page");
