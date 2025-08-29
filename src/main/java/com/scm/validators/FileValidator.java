@@ -1,5 +1,6 @@
 package com.scm.validators;
 
+import java.awt.image.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.ConstraintValidator;
@@ -16,21 +17,31 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
 
         if (file == null || file.isEmpty()) {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate("File cannot be empty");
+            context.buildConstraintViolationWithTemplate("File cannot be empty").addConstraintViolation();
             return false; // File is required
         }
 
         if (file.getSize() > MAX_FILE_SIZE) {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate("File size should be less than 2 MB");
+            context.buildConstraintViolationWithTemplate("File size should be less than 2 MB").addConstraintViolation();
             return false; // File size exceeds the limit
         }
 
-        String contentType = file.getContentType();
-        if (contentType == null || 
-            !(contentType.equals("image/jpeg") || contentType.equals("image/png") || contentType.equals("application/pdf"))) {
-            return false; // Invalid file type
-        }
+        // String contentType = file.getContentType();
+        // if (contentType == null || 
+        //     !(contentType.equals("image/jpeg") || contentType.equals("image/png") || contentType.equals("application/pdf"))) {
+        //     return false; // Invalid file type
+        // }
+
+        //resolution for checking if the file is a valid image using
+
+        // try {
+        //     bufferedImage = ImageIO.read(file.getInputStream());
+        //     if(bufferedImage.getHeight())
+        // } catch (IOException e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
+        // }
 
         return true; 
 
