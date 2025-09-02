@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
+
+<head>
+    <title>All Your Contacts</title>
+</head>
+
+<body>
+    <div id="content">
+        <!-- if user is logged in : sidebar -->
+        <div th:if="${loggedInUser}">
+            <div data-th-replace="~{user/sidebar :: sidebar}"></div>
+        </div>
+        <div class="sm:pl-64 pt-16">
+            <div class="">
+                <h1 class="text-5xl text-center">All Your Contacts</h1>
+                <p class="text-center">List of contacts will be displayed here...</p>
+                <div class="contact_container p-5">
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <div
+                            class="flex p-5 items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
+                            <div>
+                                <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction"
+                                    class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                    type="button">
+                                    <span class="sr-only">Action button</span>
+                                    Action
+                                    <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m1 1 4 4 4-4" />
+                                    </svg>
+                                </button>
+                                <!-- Dropdown menu -->
+                                <div id="dropdownAction"
+                                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
+                                    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                                        aria-labelledby="dropdownActionButton">
+                                        <li>
+                                            <a href="#"
+                                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reward</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"
+                                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Promote</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"
+                                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Activate
+                                                account</a>
+                                        </li>
+                                    </ul>
+                                    <div class="py-1">
+                                        <a href="#"
+                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete
+                                            User</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <label for="table-search" class="sr-only">Search</label>
+                            <div class="relative">
+                                <div
+                                    class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                    </svg>
+                                </div>
+                                <input type="text" id="table-search-users"
+                                    class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Search for users">
+                            </div>
+                        </div>
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead
+                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">
+                                        Name
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Phone
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Links
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-th-object="${c}" data-th-each="c : ${pageContact.getContent()}"
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <th scope="row"
+                                        class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                        <img onerror="this.src='data:image/png;base64,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'"
+                                            class="w-10 h-10 rounded-full" data-th-src="@{*{picture}}"
+                                            src="/docs/images/people/profile-picture-1.jpg" alt="Jese image">
+                                        <div class="ps-3">
+                                            <div class="text-base font-semibold" data-th-text="*{name}">Neil Sims</div>
+                                            <div class="font-normal text-gray-500" data-th-text="*{email}">
+                                                neil.sims@flowbite.com</div>
+                                        </div>
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        <i class="fa-solid fa-phone w-4 h-4"></i>
+                                        <span data-th-text="*{phoneNumber}"></span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center">
+                                            <div data-th-if="*{favorite}"
+                                                class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>
+                                            <a data-th-href="@{*{websiteLink}}" target="_blank"><i
+                                                    class="fa-solid fa-link w-6 h-6"></i></a>
+                                            <a data-th-href="@{*{linkedInLink}}" target="_blank"><i
+                                                    class="fa-brands fa-linkedin w-6 h-6"></i></a>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div>
+                                            <a href=""><i class="fa-solid w-6 h-6 fa-trash"></i></a>
+                                            <a href=""><i class="fa-solid w-6 h-6 fa-pen"></i></a>
+                                            <a href=""><i class="fa-solid w-6 h-6 fa-eye"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- Pagination Component -->
+                        <div class="pagination_container bg-white dark:bg-gray-800 p-5 text-center">
+                            <nav aria-label="Page navigation example">
+                                <ul class="inline-flex -space-x-px text-base h-10">
+                                    <li data-th-unless="${pageContact.first}">
+                                        <a 
+                                            data-th-href="@{'/user/contacts?page='+${pageContact.number - 1}+'&size='+${pageSize}}"
+                                            href="#"
+                                            class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                                    </li>
+                                    <li data-th-each="index : ${#numbers.sequence(0, pageContact.totalPages - 1)}">
+                                        <a 
+                                        data-th-href="@{'/user/contacts?size='+${pageSize}+'&page='+${index}}"
+                                        href="#"
+                                        data-th-classappend="${index==pageContact.number ? 'bg-blue-50 dark:bg-gray-700':'bg-white dark:bg-gray-800'}"
+                                            class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500  border border-gray-300 hover:bg-gray-100 hover:text-gray-700  dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                        <span data-th-text="${index + 1}"></span>
+                                        </a>
+                                    </li>
+                                    
+                                    <li data-th-unless="${pageContact.last}">
+                                        <a 
+                                            data-th-href="@{'/user/contacts?page='+${pageContact.number + 1}+'&size='+${pageSize}}"
+                                            href="#"
+                                            class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        console.log("This is user profile page");
+    </script>
+</body>
+
+</html>
