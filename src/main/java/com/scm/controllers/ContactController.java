@@ -114,7 +114,7 @@ public class ContactController {
     @RequestMapping
     public String viewContacts(
         @RequestParam(value = "page", defaultValue = "0") int page,
-        @RequestParam(value = "size", defaultValue = "10") int size,
+        @RequestParam(value = "size", defaultValue = AppConstants.PAGE_SIZE) int size,
         @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
         @RequestParam(value = "direction", defaultValue = "asc") String direction, Authentication authentication, Model model) {
 
