@@ -47,27 +47,27 @@ public class ContactController {
     private ImageService imageService;
 
     @RequestMapping("/add")
-    //add contact page: handler
+    // add contact page: handler
     public String addContactView(Model model) {
-        
+
         ContactForm contactForm = new ContactForm();
         model.addAttribute("contactForm", contactForm);
         return "user/add_contact";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String saveContact(@Valid @ModelAttribute ContactForm contactForm, BindingResult result,Authentication authentication, HttpSession session) {
+    public String saveContact(@Valid @ModelAttribute ContactForm contactForm, BindingResult result,
+            Authentication authentication, HttpSession session) {
 
-        //process the form data
+        // process the form data
 
-
-        //1 validation form
+        // 1 validation form
 
         if (result.hasErrors()) {
             session.setAttribute("message", Message.builder()
-            .content("Please correct the errors in the form")
-            .type(MessageType.red)
-            .build());
+                    .content("Please correct the errors in the form")
+                    .type(MessageType.red)
+                    .build());
             return "user/add_contact";
         }
 
@@ -78,8 +78,8 @@ public class ContactController {
 
         String filename = UUID.randomUUID().toString();
 
-        String fileURL=imageService.uploadImage(contactForm.getContactImage(), filename);
-        //form - convert to entity
+        String fileURL = imageService.uploadImage(contactForm.getContactImage(), filename);
+        // form - convert to entity
         Contact contact = new Contact();
         contact.setName(contactForm.getName());
         contact.setEmail(contactForm.getEmail());
@@ -93,30 +93,30 @@ public class ContactController {
         contact.setCloudinaryImagePublicId(filename);
         contact.setUser(user);
 
-
         contactService.save(contact);
 
-        //process the form data
+        // process the form data
         System.out.println(contactForm);
 
-        session.setAttribute("message", 
-        Message.builder()
-            .content("Contact added successfully!")
-            .type(MessageType.green)
-            .build());
+        session.setAttribute("message",
+                Message.builder()
+                        .content("Contact added successfully!")
+                        .type(MessageType.green)
+                        .build());
 
         return "redirect:/user/contacts/add";
 
     }
 
-    //View contacts
+    // View contacts
 
     @RequestMapping
     public String viewContacts(
-        @RequestParam(value = "page", defaultValue = "0") int page,
-        @RequestParam(value = "size", defaultValue = AppConstants.PAGE_SIZE) int size,
-        @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
-        @RequestParam(value = "direction", defaultValue = "asc") String direction, Authentication authentication, Model model) {
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = AppConstants.PAGE_SIZE) int size,
+            @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction, Authentication authentication,
+            Model model) {
 
         String username = Helper.getEmailOfLoggedInUser(authentication);
 
@@ -126,6 +126,39 @@ public class ContactController {
         model.addAttribute("pageContact", pageContact);
         model.addAttribute("pageSize", AppConstants.PAGE_SIZE);
         return "user/contacts";
+    }
+
+    // search handler
+    @RequestMapping("/search")
+    public String searchHandler(
+            @RequestParam("field") String field,
+            @RequestParam("keyword") String value,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = AppConstants.PAGE_SIZE) int size,
+            @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction,
+            Model model,
+            Authentication authentication) {
+            
+
+            logger.info("Field: {}, Keyword: {}", field, value);
+
+            var user = userServices.getUserByEmail(Helper.getEmailOfLoggedInUser(authentication));
+
+            Page<Contact> pageContact = null;
+
+            if (field.equalsIgnoreCase("name")) {
+                pageContact = contactService.searchByName(value, size, page, sortBy, direction, user);
+            } else if (field.equalsIgnoreCase("email")) {
+                pageContact = contactService.searchByEmail(value, size, page, sortBy, direction, user);
+            } else if (field.equalsIgnoreCase("phoneNumber")) {
+                pageContact = contactService.searchByPhoneNumber(value, size, page, sortBy, direction, user);
+            }
+
+            logger.info("Page Contacts: {}", pageContact);
+            model.addAttribute("pageContact", pageContact);
+
+            return "user/search";
     }
 
 }
