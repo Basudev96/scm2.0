@@ -73,14 +73,14 @@ public class ContactServiceImpl implements ContactService {
         
         Sort sort = order.equals("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         var pageable = PageRequest.of(page, size, sort);
-        return contactRepo.findByNameContainingOrUser(nameKeyword, user, pageable);
+        return contactRepo.findByUserAndNameContaining( user,nameKeyword, pageable);
     }
 
     @Override
     public Page<Contact> searchByEmail(String emailKeyword, int size, int page, String sortBy, String order, User user) {
         Sort sort = order.equals("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         var pageable = PageRequest.of(page, size, sort);
-        return contactRepo.findByEmailContainingOrUser(emailKeyword, user, pageable);
+        return contactRepo.findByUserAndEmailContaining( user, emailKeyword, pageable);
         
     }
 
@@ -90,7 +90,7 @@ public class ContactServiceImpl implements ContactService {
         
         Sort sort = order.equals("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         var pageable = PageRequest.of(page, size, sort);
-        return contactRepo.findByPhoneNumberContainingOrUser(phoneNumberKeyword, user, pageable);
+        return contactRepo.findByUserAndPhoneNumberContaining( user, phoneNumberKeyword, pageable);
     }
 
     
